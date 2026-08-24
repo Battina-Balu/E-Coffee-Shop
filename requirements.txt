@@ -1,0 +1,11 @@
+asgiref==3.12.1
+click==8.4.2
+colorama==0.4.6
+Django==6.1
+gunicorn==26.1.0
+h11==0.16.0
+pillow==12.3.0
+sqlparse==0.5.5
+tzdata==2026.3
+uvicorn==0.52.4
+whitenoise==6.12.0
