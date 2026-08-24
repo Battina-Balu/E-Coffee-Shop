@@ -1,0 +1,297 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Coffee Menu | E-Coffee Shop{% endblock %}
+
+{% block content %}
+
+<!-- ============================================================
+     PREMIUM MENU HERO
+============================================================ -->
+
+<section class="menu-hero">
+
+    <div class="menu-hero-content">
+
+        <span class="menu-badge">
+            ☕ FRESHLY BREWED
+        </span>
+
+        <h1>
+            Discover Your
+            <span>Perfect Coffee</span>
+        </h1>
+
+        <p>
+            Explore our carefully selected collection of
+            premium coffee, crafted for every coffee lover.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ============================================================
+     MENU SECTION
+============================================================ -->
+
+<section class="menu-section" id="menu">
+
+    <div class="section-heading">
+
+        <p>OUR COLLECTION</p>
+
+        <h2>Explore Our Coffee Menu</h2>
+
+        <span>
+            Find your favorite flavor and make every sip special.
+        </span>
+
+    </div>
+
+
+    <!-- ========================================================
+         SEARCH
+    ========================================================= -->
+
+    <div class="menu-search">
+
+        <form method="GET">
+
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search your favorite coffee..."
+                >
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ========================================================
+         CATEGORY FILTER
+    ========================================================= -->
+
+    <div class="category-filter">
+
+        <a
+            href="{% url 'menu' %}"
+            class="{% if not selected_category %}active{% endif %}"
+        >
+            All
+        </a>
+
+        {% for category in categories %}
+
+            <a
+                href="{% url 'menu' %}?category={{ category.name|urlencode }}"
+                class="{% if selected_category == category.name %}active{% endif %}"
+            >
+                {{ category.name }}
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- ========================================================
+         PRODUCTS
+    ========================================================= -->
+
+    {% if products %}
+
+        <div class="coffee-grid">
+
+            {% for product in products %}
+
+                <article class="coffee-card">
+
+                    <!-- IMAGE -->
+
+                    <div class="coffee-image">
+
+                        {% if product.image_url %}
+
+                            <img
+                                src="{{ product.image_url }}"
+                                alt="{{ product.name }}"
+                            >
+
+                        {% else %}
+
+                            <div class="coffee-placeholder">
+                                ☕
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if product.is_featured %}
+
+                            <span class="featured-badge">
+                                ⭐ Popular
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- DETAILS -->
+
+                    <div class="coffee-details">
+
+                        <div class="coffee-category">
+
+                            {{ product.category.name }}
+
+                        </div>
+
+                        <h3>
+                            {{ product.name }}
+                        </h3>
+
+                        {% if product.description %}
+
+                            <p>
+                                {{ product.description|truncatewords:18 }}
+                            </p>
+
+                        {% else %}
+
+                            <p>
+                                Deliciously prepared coffee
+                                for your perfect moment.
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- PRICE + ACTION -->
+
+                        <div class="coffee-bottom">
+
+                            <div class="coffee-price">
+
+                                <small>Price</small>
+
+                                <strong>
+                                    ₹{{ product.price }}
+                                </strong>
+
+                            </div>
+
+
+                            <a
+                                href="{% url 'product_detail' product.id %}"
+                                class="view-product-btn"
+                            >
+                                View
+                            </a>
+
+                        </div>
+
+
+                        <!-- ADD TO CART -->
+
+                        <a
+                            href="{% url 'add_to_cart' product.id %}"
+                            class="add-cart-btn"
+                        >
+                            <span>🛒</span>
+                            Add to Cart
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <!-- ====================================================
+             NO PRODUCTS
+        ===================================================== -->
+
+        <div class="no-products">
+
+            <div class="no-products-icon">
+                ☕
+            </div>
+
+            <h3>
+                No coffee found
+            </h3>
+
+            <p>
+                We couldn't find a coffee matching your search.
+            </p>
+
+            <a
+                href="{% url 'menu' %}"
+                class="primary-btn"
+            >
+                View All Coffee
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- ============================================================
+     PREMIUM CTA
+============================================================ -->
+
+<section class="coffee-cta">
+
+    <div>
+
+        <span>YOUR PERFECT CUP AWAITS</span>
+
+        <h2>
+            Good Coffee.
+            <br>
+            Good Mood.
+        </h2>
+
+        <p>
+            Choose your favorite coffee and enjoy
+            a delicious experience with E-Coffee Shop.
+        </p>
+
+        <a
+            href="{% url 'home' %}"
+            class="cta-btn"
+        >
+            Back to Home →
+        </a>
+
+    </div>
+
+    <div class="cta-coffee-icon">
+        ☕
+    </div>
+
+</section>
+
+{% endblock %}

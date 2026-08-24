@@ -1,0 +1,168 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Checkout | E-Coffee Shop{% endblock %}
+
+{% block content %}
+
+<section class="checkout-section">
+
+    <div class="section-heading">
+        <p>COMPLETE YOUR ORDER</p>
+        <h2>Checkout ☕</h2>
+    </div>
+
+
+    <div class="checkout-container">
+
+        <!-- ORDER SUMMARY -->
+
+        <div class="checkout-card">
+
+            <h3>Order Summary</h3>
+
+            {% for item in cart_items %}
+
+            <div class="checkout-item">
+
+                <div class="checkout-image">
+
+                    {% if item.product.image_url %}
+
+                        <img
+                            src="{{ item.product.image_url }}"
+                            alt="{{ item.product.name }}"
+                        >
+
+                    {% else %}
+
+                        <span>☕</span>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="checkout-info">
+
+                    <h4>
+                        {{ item.product.name }}
+                    </h4>
+
+                    <p>
+                        ₹{{ item.product.price }}
+                        × {{ item.quantity }}
+                    </p>
+
+                </div>
+
+                <strong>
+                    ₹{{ item.subtotal }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+
+            <div class="checkout-total">
+
+                <span>
+                    Total Amount
+                </span>
+
+                <strong>
+                    ₹{{ total }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- CUSTOMER INFORMATION -->
+
+        <div class="checkout-card">
+
+            <h3>Customer Information</h3>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="checkout-field">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        value="{{ request.user.username }}"
+                        readonly
+                    >
+
+                </div>
+
+
+                <div class="checkout-field">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        value="{{ request.user.email }}"
+                        readonly
+                    >
+
+                </div>
+
+
+                <div class="checkout-field">
+
+                    <label>
+                        Delivery Address
+                    </label>
+
+                    <textarea
+                        name="address"
+                        rows="4"
+                        placeholder="Enter your delivery address"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="checkout-field">
+
+                    <label>
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn checkout-btn"
+                >
+                    Place Order ☕
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

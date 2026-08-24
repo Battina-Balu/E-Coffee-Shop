@@ -1,0 +1,165 @@
+{% extends "shop/base.html" %}
+
+{% block title %}
+My Dashboard | E-Coffee Shop
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-section">
+
+    <!-- HEADER -->
+
+    <div class="section-heading">
+
+        <p>MY ACCOUNT</p>
+
+        <h2>
+            Welcome, {{ request.user.username }} ☕
+        </h2>
+
+        <p>
+            View your orders and order history.
+        </p>
+
+    </div>
+
+
+    <!-- DASHBOARD STATS -->
+
+    <div class="dashboard-stats">
+
+        <div class="dashboard-stat">
+
+            <h3>
+                {{ total_orders }}
+            </h3>
+
+            <p>
+                Total Orders
+            </p>
+
+        </div>
+
+
+        <div class="dashboard-stat">
+
+            <h3>
+                ₹{{ total_spent }}
+            </h3>
+
+            <p>
+                Total Spent
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ORDER HISTORY -->
+
+    <div class="dashboard-header">
+
+        <h2>
+            My Orders
+        </h2>
+
+    </div>
+
+
+    {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+                <div class="order-card">
+
+                    <div class="order-header">
+
+                        <h3>
+                            Order #{{ order.id }}
+                        </h3>
+
+                        <span>
+                            {{ order.status }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="order-details">
+
+                        <p>
+                            <strong>Total:</strong>
+                            ₹{{ order.total_amount }}
+                        </p>
+
+                        <p>
+                            <strong>Phone:</strong>
+                            {{ order.phone }}
+                        </p>
+
+                        <p>
+                            <strong>Address:</strong>
+                            {{ order.address }}
+                        </p>
+
+                        <p>
+                            <strong>Ordered on:</strong>
+                            {{ order.created_at|date:"d M Y, h:i A" }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-cart">
+
+            <div class="empty-cart-icon">
+                📦
+            </div>
+
+            <h3>
+                No orders yet
+            </h3>
+
+            <p>
+                You haven't placed any orders yet.
+            </p>
+
+            <a
+                href="{% url 'home' %}"
+                class="primary-btn"
+            >
+                Order Coffee ☕
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- BACK TO HOME -->
+
+    <div class="cart-actions">
+
+        <a
+            href="{% url 'home' %}"
+            class="secondary-btn"
+        >
+            ← Continue Shopping
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

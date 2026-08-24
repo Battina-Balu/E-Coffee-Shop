@@ -1,0 +1,208 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Shopping Cart | E-Coffee Shop{% endblock %}
+
+{% block content %}
+
+<section class="cart-section">
+
+    <div class="section-heading">
+        <p>YOUR ORDER</p>
+        <h2>Shopping Cart 🛒</h2>
+    </div>
+
+
+    {% if cart_items %}
+
+    <div class="cart-container">
+
+        {% for item in cart_items %}
+
+        <div class="cart-item">
+
+            <!-- PRODUCT IMAGE -->
+            <div class="cart-product-image">
+
+                {% if item.product.image_url %}
+
+                    <img
+                        src="{{ item.product.image_url }}"
+                        alt="{{ item.product.name }}"
+                    >
+
+                {% else %}
+
+                    <span>☕</span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- PRODUCT DETAILS -->
+            <div class="cart-product-info">
+
+                {% if item.product.category %}
+
+                    <small>
+                        {{ item.product.category.name }}
+                    </small>
+
+                {% endif %}
+
+                <h3>
+                    {{ item.product.name }}
+                </h3>
+
+                <p>
+                    ₹{{ item.product.price }} each
+                </p>
+
+                <!-- VIEW PRODUCT -->
+                <a
+                    href="{% url 'product_detail' item.product.pk %}"
+                    class="view-details-btn"
+                >
+                    View Details
+                </a>
+
+            </div>
+
+
+            <!-- QUANTITY -->
+            <div class="cart-quantity">
+
+                <form
+                    method="POST"
+                    action="{% url 'update_cart' item.product.pk %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="decrease"
+                        aria-label="Decrease quantity"
+                    >
+                        −
+                    </button>
+
+                    <span>
+                        {{ item.quantity }}
+                    </span>
+
+                    <button
+                        type="submit"
+                        name="action"
+                        value="increase"
+                        aria-label="Increase quantity"
+                    >
+                        +
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- SUBTOTAL -->
+            <div class="cart-subtotal">
+
+                ₹{{ item.subtotal }}
+
+            </div>
+
+
+            <!-- REMOVE -->
+            <div class="cart-remove">
+
+                <form
+                    method="POST"
+                    action="{% url 'remove_from_cart' item.product.pk %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button type="submit">
+                        🗑 Remove
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+        <!-- CART TOTAL -->
+        <div class="cart-total">
+
+            <span>
+                Total
+            </span>
+
+            <strong>
+                ₹{{ total }}
+            </strong>
+
+        </div>
+
+
+        <!-- ACTION BUTTONS -->
+        <div class="cart-actions">
+
+            <a
+                href="{% url 'menu' %}"
+                class="secondary-btn"
+            >
+                ← Continue Shopping
+            </a>
+
+
+            <a
+                href="{% url 'checkout' %}"
+                class="primary-btn"
+            >
+                Proceed to Checkout →
+            </a>
+
+        </div>
+
+    </div>
+
+
+    {% else %}
+
+    <!-- EMPTY CART -->
+
+    <div class="empty-cart">
+
+        <div class="empty-cart-icon">
+            🛒
+        </div>
+
+        <h3>
+            Your cart is empty
+        </h3>
+
+        <p>
+            Add some delicious coffee to get started.
+        </p>
+
+        <a
+            href="{% url 'menu' %}"
+            class="primary-btn"
+        >
+            Explore Coffee ☕
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

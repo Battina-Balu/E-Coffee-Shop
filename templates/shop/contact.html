@@ -1,0 +1,266 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Contact Us | E-Coffee Shop{% endblock %}
+
+{% block content %}
+
+<section class="contact-page">
+
+    <!-- CONTACT HERO -->
+
+    <div class="contact-hero">
+
+        <div class="contact-hero-content">
+
+            <p class="contact-small">
+                GET IN TOUCH
+            </p>
+
+            <h1>
+                We'd Love to<br>
+                <span>Hear From You.</span>
+            </h1>
+
+            <p>
+                Have a question about our coffee, an order,
+                or anything else? We are always happy to help.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTACT CONTENT -->
+
+    <div class="contact-container">
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="contact-info">
+
+            <p class="contact-small">
+                CONTACT US
+            </p>
+
+            <h2>
+                Let's Talk Coffee ☕
+            </h2>
+
+            <p class="contact-intro">
+                Whether you have a question about our menu,
+                need help with an order, or simply want to
+                say hello, we'd love to hear from you.
+            </p>
+
+
+            <!-- ADDRESS -->
+
+            <div class="contact-detail">
+
+                <div class="contact-detail-icon">
+                    📍
+                </div>
+
+                <div>
+                    <h3>Address</h3>
+
+                    <p>
+                        E-Coffee Shop<br>
+                        Hyderabad, Telangana, India
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="contact-detail">
+
+                <div class="contact-detail-icon">
+                    📞
+                </div>
+
+                <div>
+                    <h3>Phone</h3>
+
+                    <p>
+                        +91 90000 00000
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="contact-detail">
+
+                <div class="contact-detail-icon">
+                    📧
+                </div>
+
+                <div>
+                    <h3>Email</h3>
+
+                    <p>
+                        support@ecoffeeshop.com
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- OPENING HOURS -->
+
+            <div class="contact-detail">
+
+                <div class="contact-detail-icon">
+                    🕐
+                </div>
+
+                <div>
+                    <h3>Opening Hours</h3>
+
+                    <p>
+                        Monday - Sunday<br>
+                        8:00 AM - 10:00 PM
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE FORM -->
+
+        <div class="contact-form-card">
+
+            <p class="contact-small">
+                SEND A MESSAGE
+            </p>
+
+            <h2>
+                Send Us a Message
+            </h2>
+
+            <p class="form-description">
+                Fill out the form below and our team will
+                get back to you soon.
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="contact-field">
+
+                    <label for="name">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="contact-field">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="contact-field">
+
+                    <label for="subject">
+                        Subject
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        placeholder="What is this about?"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="contact-field">
+
+                    <label for="message">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        rows="6"
+                        placeholder="Write your message..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="contact-submit"
+                >
+                    Send Message ☕
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM CTA -->
+
+    <div class="contact-cta">
+
+        <h2>
+            Your Perfect Coffee Is Waiting.
+        </h2>
+
+        <p>
+            Explore our menu and discover your next favourite coffee.
+        </p>
+
+        <a
+            href="{% url 'menu' %}"
+            class="primary-btn"
+        >
+            Explore Menu ☕
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

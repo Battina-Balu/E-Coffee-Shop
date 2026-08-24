@@ -1,0 +1,216 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}E-Coffee Shop{% endblock %}
+    </title>
+<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+
+<!-- Main Website CSS -->
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% block extra_css %}{% endblock %}
+
+    
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+            ☕ <span>E-Coffee</span>
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav>
+
+            <!-- HOME -->
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+
+            <!-- MENU -->
+
+            <a href="{% url 'menu' %}#menu">
+                Menu
+            </a>
+
+
+            <!-- ABOUT -->
+
+            <a href="{% url 'about' %}#about">
+                About
+            </a>
+
+
+            <!-- CONTACT -->
+
+            <a href="{% url 'contact' %}#contact">
+                Contact
+            </a>
+
+        </nav>
+
+
+        <!-- =================================================
+             NAVIGATION ACTIONS
+        ================================================== -->
+
+        <div class="nav-actions">
+
+            {% if user.is_authenticated %}
+
+                <!-- ================================
+                     LOGGED-IN USER
+                ================================= -->
+
+
+                <!-- CART -->
+
+                <a href="{% url 'cart' %}"
+                   class="cart-btn">
+
+                    🛒 Cart
+
+                </a>
+
+
+                <!-- DASHBOARD -->
+
+                <a href="{% url 'dashboard' %}"
+                   class="login-btn">
+
+                    👤 Dashboard
+
+                </a>
+
+
+                <!-- LOGOUT -->
+
+                <a href="{% url 'logout' %}"
+                   class="login-btn">
+
+                    Logout
+
+                </a>
+
+
+            {% else %}
+
+                <!-- ================================
+                     VISITOR
+                ================================= -->
+
+
+                <!-- LOGIN -->
+
+                <a href="{% url 'login' %}"
+                   class="login-btn">
+
+                    Login
+
+                </a>
+
+
+                <!-- REGISTER -->
+
+                <a href="{% url 'register' %}"
+                   class="login-btn">
+
+                    Register
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main>
+
+        <!-- DJANGO MESSAGES -->
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- PAGE CONTENT -->
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 E-Coffee Shop. Crafted with ☕
+        </p>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+    <!-- PAGE-SPECIFIC JAVASCRIPT -->
+
+    {% block extra_js %}
+    {% endblock %}
+
+
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+{% extends "shop/base.html" %}
+
+{% block title %}Login | E-Coffee Shop{% endblock %}
+
+{% block content %}
+
+<section class="login-section">
+
+    <div class="login-container">
+
+        <!-- =========================
+             LOGIN HEADER
+        ========================== -->
+
+        <div class="login-header">
+
+            <div class="login-icon">
+                ☕
+            </div>
+
+            <h1>
+                Welcome Back
+            </h1>
+
+            <p>
+                Login to your E-Coffee account
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             DJANGO MESSAGES
+        ========================== -->
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- =========================
+             LOGIN FORM
+        ========================== -->
+
+        <form method="POST"
+              class="login-form">
+
+            {% csrf_token %}
+
+
+            <!-- Preserve next URL -->
+
+            {% if request.GET.next %}
+
+                <input
+                    type="hidden"
+                    name="next"
+                    value="{{ request.GET.next }}"
+                >
+
+            {% endif %}
+
+
+            <!-- USERNAME -->
+
+            <div class="form-group">
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+                type="submit"
+                class="primary-btn login-submit"
+            >
+                Login ☕
+            </button>
+
+        </form>
+
+
+        <!-- =========================
+             REGISTER
+        ========================== -->
+
+        <div class="register-link">
+
+            <p>
+                Don't have an account?
+            </p>
+
+            <a
+                href="{% url 'register' %}"
+                class="secondary-btn"
+            >
+                Create New Account
+            </a>
+
+        </div>
+
+
+        <!-- =========================
+             BACK TO HOME
+        ========================== -->
+
+        <div class="back-home">
+
+            <a href="{% url 'home' %}">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

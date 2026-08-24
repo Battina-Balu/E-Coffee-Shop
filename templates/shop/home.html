@@ -1,0 +1,208 @@
+{% extends "shop/base.html" %}
+
+{% block title %}E-Coffee Shop | Premium Coffee{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-small">
+            WELCOME TO E-COFFEE
+        </p>
+
+        <h1>
+            Crafted Coffee.<br>
+            Made For Your Moment.
+        </h1>
+
+        <p class="hero-description">
+            Discover premium coffee, delicious treats, and a warm
+            café experience delivered straight to you.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#menu" class="primary-btn">
+                Explore Menu ☕
+            </a>
+
+            <a href="#menu" class="secondary-btn">
+                Order Now →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     COFFEE MENU
+========================= -->
+
+<section class="featured" id="menu">
+
+    <div class="section-heading">
+
+        <p>OUR MENU</p>
+
+        <h2>
+            Discover Our Coffee
+        </h2>
+
+    </div>
+
+
+    <!-- =========================
+         SEARCH AND FILTER
+    ========================= -->
+
+    <div class="menu-controls">
+
+        <!-- SEARCH -->
+
+        <form method="GET" class="search-form">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search your favorite coffee..."
+            >
+
+            <button type="submit">
+                🔎 Search
+            </button>
+
+        </form>
+
+
+        <!-- CATEGORY FILTERS -->
+
+        <div class="category-filters">
+
+            <a
+                href="{% url 'home' %}"
+                class="{% if not selected_category %}active{% endif %}"
+            >
+                All
+            </a>
+
+            {% for category in categories %}
+
+                <a
+                    href="?category={{ category.name|urlencode }}"
+                    class="{% if selected_category == category.name %}active{% endif %}"
+                >
+                    {{ category.name }}
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PRODUCT GRID
+    ========================= -->
+
+    <div class="coffee-grid">
+
+        {% for product in products %}
+
+            <div class="coffee-card">
+
+
+                <!-- =========================
+                     PRODUCT IMAGE
+                ========================= -->
+
+                <div class="coffee-image">
+
+                    {% if product.image_url %}
+
+                        <img
+                            src="{{ product.image_url }}"
+                            alt="{{ product.name }}"
+                        >
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- =========================
+                     PRODUCT INFORMATION
+                ========================= -->
+
+                <div class="coffee-info">
+
+                    <small>
+                        {{ product.category.name }}
+                    </small>
+
+                    <h3>
+                        {{ product.name }}
+                    </h3>
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+
+                    <!-- PRICE + ADD TO CART -->
+
+                    <div class="coffee-bottom">
+
+                        <span>
+                            ₹{{ product.price }}
+                        </span>
+
+                        <a
+                            href="{% url 'add_to_cart' product.pk %}"
+                            class="add-cart-btn"
+                        >
+                            + Add
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        {% empty %}
+
+            <!-- NO PRODUCTS -->
+
+            <div class="empty-menu">
+
+                <span>☕</span>
+
+                <h3>
+                    No coffee found
+                </h3>
+
+                <p>
+                    Try another coffee name or category.
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}
